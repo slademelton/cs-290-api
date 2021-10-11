@@ -1,0 +1,10 @@
+{
+    "name": "Charlotte Hornets",
+    "description": "A NBA team located in Charlottte, NC",
+    "website": "https://www.nba.com/hornets/",
+    "email": "info@hornets.com",
+    "phone": "704-HORNETS",
+    "address": "333 East Trade Street Charlotte, NC 28202",
+    "coach": "James Borrego",
+    "record": "0-0"
+}
