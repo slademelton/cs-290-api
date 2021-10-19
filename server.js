@@ -6,6 +6,7 @@ const colors = require('colors');
 
 //Import Local Files
 const connectToDb = require('./config/connectToDb');
+const errorHandler = require('./middleware/errorHandler');
 
 //load dotenv variables
 dotenv.config({path: "./config/config.env"});
@@ -24,6 +25,9 @@ const teamsRoutes = require('./routes/teams');
 //use routes
 app.use('/api/v1/teams', teamsRoutes);
 
+//error handling middleware - must be last app.use()!!
+app.use(errorHandler);
+
 const server = app.listen(PORT, () => {
     console.log(`Server listening in ${process.env.NODE_ENV} on port ${PORT}`);
 });
@@ -38,6 +42,5 @@ process.on('unhandledRejection', (err, promise) => {
     })
 
 })
-
 
 

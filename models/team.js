@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
+const geocoder = require('../utils/geocoder');
 
 const TeamSchema = new mongoose.Schema({
     name: {
@@ -75,6 +77,35 @@ const TeamSchema = new mongoose.Schema({
     }
 });
 
-//Will be adding mongoose middleware later that calculates lots of these fields
+//==============
+//middleware
+//==============
+//create slug from name
+TeamSchema.pre("save", function(next) {
+    this.slug = slugify(this.name, {
+        lower: true,
+        replacement: '_',
+    });
+    next();
+});
+
+//geocode and create location field
+TeamSchema.pre("save", async function(next) {
+    const query = await geocoder.geocode(this.address);
+    const loc = query[0];
+    this.location = {
+        type: "Point",
+        coordinates: [loc.longitude, loc.latitude],
+        formattedAddress: loc.formattedAddress,
+        street: loc.stretName,
+        city: loc.city,
+        state: loc.stateCode,
+        zipcode: loc.zipcode,
+        country: loc.countryCode
+    }
+    //don't save address in DB, since we have better representation as a geocode
+    this.address = undefined;
+    next();
+})
 
 module.exports = mongoose.model("Team", TeamSchema);
