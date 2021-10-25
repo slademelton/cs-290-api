@@ -5,10 +5,12 @@ const { getTeams,
         getTeam, 
         createTeam, 
         updateTeam, 
-        deleteTeam 
+        deleteTeam,
+        getTeamsInRadius
 } = require('../controllers/teams');
 
 router.route('/').get(getTeams).post(createTeam);
+router.route('/radius').get(getTeamsInRadius);
 router.route('/:id').get(getTeam).put(updateTeam).delete(deleteTeam);
 
 

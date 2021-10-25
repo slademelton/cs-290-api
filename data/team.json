@@ -1,10 +1,38 @@
-{
-    "name": "Charlotte Hornets",
-    "description": "A NBA team located in Charlottte, NC",
-    "website": "https://www.nba.com/hornets/",
-    "email": "info@hornets.com",
-    "phone": "704-HORNETS",
-    "address": "333 East Trade Street Charlotte, NC 28202",
-    "coach": "James Borrego",
-    "record": "0-0"
-}
+[
+    {
+        "_id": "6175e1c4f8f9ccb6f655547c",
+        "name": "Charlotte Hornets",
+        "description": "A NBA team located in Charlottte, NC",
+        "website": "https://www.nba.com/hornets/",
+        "email": "info@hornets.com",
+        "phone": "704-HORNETS",
+        "address": "333 East Trade Street Charlotte, NC 28202",
+        "coach": "James Borrego",
+        "wins": 3,
+        "losses": 0
+    },
+    {
+        "_id": "6175e27821e2bd042f78c7a5",
+        "name": "Memphis Grizzlies",
+        "description": "A NBA team located in Memphis, TN",
+        "website": "https://www.nba.com/grizzlies/",
+        "email": "info@grizzlies.com",
+        "phone": "901-205-1234",
+        "address": "191 Beale Street Memphis, TN 38103",
+        "coach": "Taylor Jenkins",
+        "wins": 2,
+        "losses": 0
+    },
+    {
+        "_id": "6175e364a7b1d5b14a6dd787",
+        "name": "Atlanta Hawks",
+        "description": "A NBA team located in Atlanta, GA",
+        "website": "https://www.nba.com/hawks/",
+        "email": "hawks.tickets@hawks.com",
+        "phone": "1-866-715-1500",
+        "address": "1 State Farm Dr Atlanta, GA 30303",
+        "coach": "Nate McMillan",
+        "wins": 1,
+        "losses": 1
+    }
+]

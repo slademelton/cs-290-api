@@ -62,10 +62,13 @@ const TeamSchema = new mongoose.Schema({
         trim: true,
         maxlength: [50, "Coach must be 50 characters or less"]
     },
-    record: {
-        type: String,
-        required: [true, "Please enter a team record."],
-        maxlength: [7, "Record must be 7 characters or less"]
+    wins: {
+        type: Number,
+        required: true,
+    },
+    losses: {
+        type: Number,
+        required: true,
     },
     photo: {
         type: String,
