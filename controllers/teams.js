@@ -12,7 +12,7 @@ exports.getTeams = asyncHandler(async (req, res, next) => {
     const reqQuery = {...req.query};
 
     //fields to exclude
-    const fieldsToRemove = ["select", "sort"]
+    const fieldsToRemove = ["select", "sort", "page", "limit"];
 
     //loop over fieldsToRemove and delete them from reqQuery
     fieldsToRemove.forEach((param) => {
@@ -40,13 +40,40 @@ exports.getTeams = asyncHandler(async (req, res, next) => {
         query = query.sort('createdAt');
     }
 
-    // run query and return results
+    //pagination
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 20;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit - 1;
+    const total = await Team.countDocuments();
+
+    query = query.skip(startIndex).limit(limit);
+
+    //executing query
     
     const teams = await query;
-        
+    
+    //pagination results
+    const pagination = {}
+    //make sure we're not on the last page
+    if (endIndex < total) {
+        pagination.next = {
+            page: page + 1,
+            limit
+        }
+    }
+
+    //make sure we're not on first page
+    if (startIndex > 0) {
+        pagination.prev = {
+            page: page - 1,
+            limit
+        }
+    }
     res.status(200).json({
         success: true,
         count: teams.length,
+        pagination,
         data: teams
     });
 
