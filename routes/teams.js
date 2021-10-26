@@ -12,13 +12,14 @@ const { getTeams,
         createTeam, 
         updateTeam, 
         deleteTeam,
-        getTeamsInRadius
+        getTeamsInRadius,
+        uploadTeamPhoto
 } = require('../controllers/teams');
 
 router.route('/').get(getTeams).post(createTeam);
 router.route('/radius').get(getTeamsInRadius);
 router.route('/:id').get(getTeam).put(updateTeam).delete(deleteTeam);
-
+router.route('/:id/photo').put(uploadTeamPhoto);
 
 module.exports = router;
  

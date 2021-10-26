@@ -2,6 +2,7 @@ const Team = require('../models/team');
 const asyncHandler = require('../middleware/asyncHandler');
 const ErrorHandler = require('../utils/errorResponse');
 const geocoder = require('../utils/geocoder');
+const path = require('path');
 
 //ex {{url}}/api/v1/teams?wins[lte]=2
 exports.getTeams = asyncHandler(async (req, res, next) => {
@@ -116,6 +117,7 @@ exports.deleteTeam = asyncHandler(async (req, res, next) => {
         }
 
         team.remove();
+
         res.status(200).json({
             success: true,
             data: {}
@@ -149,5 +151,49 @@ exports.getTeamsInRadius = asyncHandler(async (req, res, next) => {
         success: true,
         count: teams.length,
         data: teams
+    })
+});
+
+exports.uploadTeamPhoto = asyncHandler(async (req, res, next) => {
+    //find team
+    const team = await Team.findById(req.params.id);
+    if (!team) {
+        return next(new ErrorHandler(`Team not found with id of ${req.params.id}`, 404));
+    }
+    //validate image
+    if (!req.files) {
+        return next(new ErrorHandler('Please upload a file', 400)); 
+    }
+    const file = req.files.file;
+
+    //make sure file is an image
+    if (!file.mimetype.startsWith('image')) {
+        return next(new ErrorHandler('Please upload an image file', 404)); 
+    }
+
+    //check filesize
+    if (file.size > process.env.FILE_UPLOAD_MAX_SIZE) {
+        return next(new ErrorHandler(`Please upload an image file smaller than ${process.env.FILE_UPLOAD_MAX_SIZE}`, 400))
+    }
+    //change filename: photo_teamid
+    file.name = `photo_${team._id}${path.parse(file.name).ext}`;
+    
+    //move image to the proper location
+    file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, (err) => {
+        if (err) {
+            console.error(err.red);
+            return next(new ErrorHandler(`Problem uploading file`, 500));
+        }
+    })
+
+    //update team with new image filename
+    await Team.findByIdAndUpdate(req.params.id, { photo: file.name});
+
+    res.status(200).json({
+        success: true,
+        data: {
+            team: team._id,
+            file: file.name
+        }
     })
 });

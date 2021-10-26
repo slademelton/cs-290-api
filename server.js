@@ -1,8 +1,10 @@
 //Slade Melton - CS290 API
-//Import NPM Packages
+//Import NPM/Node Packages
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const fileupload = require('express-fileupload');
 
 //Import Local Files
 const connectToDb = require('./config/connectToDb');
@@ -18,6 +20,12 @@ app.use(express.json());
 
 //Connect to DB
 connectToDb();
+
+//file uploading
+app.use(fileupload());
+
+//set static folder
+app.use(express.static(path.join(__dirname, 'public')))
 
 //import routes
 const teamRoutes = require('./routes/teams');
@@ -44,4 +52,4 @@ process.on('unhandledRejection', (err, promise) => {
 
 })
 
-//done with 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9, 10.10 
+//done with 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9, 10.10, 10.11 
