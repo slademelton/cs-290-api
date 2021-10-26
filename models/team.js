@@ -78,6 +78,9 @@ const TeamSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
 });
 
 //==============
@@ -109,6 +112,24 @@ TeamSchema.pre("save", async function(next) {
     //don't save address in DB, since we have better representation as a geocode
     this.address = undefined;
     next();
-})
+});
+
+//cascade delete players when a team is deleted
+TeamSchema.pre('remove', async function(next) {
+    console.log(`Players being deleted from team ${this.name}`)
+    await this.model("Player").deleteMany({ team: this._id });
+    next();
+}) 
+
+//==============
+//virtuals
+//==============
+//reverse populate with virtuals
+TeamSchema.virtual('players', {
+    ref: 'Player',
+    localField: '_id',
+    foreignField: 'team',
+    justOne: false
+});
 
 module.exports = mongoose.model("Team", TeamSchema);

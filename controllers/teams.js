@@ -24,7 +24,7 @@ exports.getTeams = asyncHandler(async (req, res, next) => {
         return "$" + match;
     });
     //console.log(queryStr);
-    query = Team.find(JSON.parse(queryStr));
+    query = Team.find(JSON.parse(queryStr)).populate('players');
     
     //select fields
     if (req.query.select) {
@@ -110,10 +110,12 @@ exports.updateTeam = asyncHandler(async (req, res, next) => {
         });
 });
 exports.deleteTeam = asyncHandler(async (req, res, next) => {
-        const team = await Team.findByIdAndDelete(req.params.id);
+        const team = await Team.findById(req.params.id);
         if (!team) {
             return next(new ErrorHandler(`Team not found with id of ${req.params.id}`, 404));
         }
+
+        team.remove();
         res.status(200).json({
             success: true,
             data: {}
