@@ -20,11 +20,12 @@ app.use(express.json());
 connectToDb();
 
 //import routes
-const teamsRoutes = require('./routes/teams');
+const teamRoutes = require('./routes/teams');
+const playerRoutes = require('./routes/players');
 
 //use routes
-app.use('/api/v1/teams', teamsRoutes);
-
+app.use('/api/v1/teams', teamRoutes);
+app.use('/api/v1/players', playerRoutes);
 //error handling middleware - must be last app.use()!!
 app.use(errorHandler);
 

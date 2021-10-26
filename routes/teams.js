@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+//include other resource routers
+const playerRouter = require('./players');
+
+//reroute into other resource routers
+router.use('/:id/players', playerRouter);
+
 const { getTeams,
         getTeam, 
         createTeam, 
@@ -15,7 +21,6 @@ router.route('/:id').get(getTeam).put(updateTeam).delete(deleteTeam);
 
 
 module.exports = router;
-//done with 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7,
  
  
  
