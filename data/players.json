@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Lamelo Ball",
+        "position": "point guard",
+        "jerseyNum": 2,
+        "height": "6'7",
+        "weight": 181,
+        "collegeEtc": "Illawarra Hawks of Australian NBL",
+        "injured": false,
+        "team": "6175e1c4f8f9ccb6f655547c"
+    },
+    {
+        "name": "Ja Morant",
+        "position": "point guard",
+        "jerseyNum": 12,
+        "height": "6'3",
+        "weight": 174,
+        "collegeEtc": "Murray State University",
+        "injured": false,
+        "team": "6175e27821e2bd042f78c7a5"
+    },
+    {
+        "name": "Trae Young",
+        "position": "point guard",
+        "jerseyNum": 11,
+        "height": "6'1",
+        "weight": 180,
+        "collegeEtc": "University of Oklahoma",
+        "injured": false,
+        "team": "6175e364a7b1d5b14a6dd787"
+    }
+]
