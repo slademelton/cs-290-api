@@ -66,6 +66,9 @@ const TeamSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    averageFee: {
+        type: Number
+    },
     losses: {
         type: Number,
         required: true,
@@ -116,10 +119,10 @@ TeamSchema.pre("save", async function(next) {
 
 //cascade delete players when a team is deleted
 TeamSchema.pre('remove', async function(next) {
-    console.log(`Players being deleted from team ${this.name}`)
+    console.log(`Players being deleted from team ${this.name}`);
     await this.model("Player").deleteMany({ team: this._id });
     next();
-}) 
+}); 
 
 //==============
 //virtuals
