@@ -28,5 +28,15 @@
         "collegeEtc": "University of Oklahoma",
         "injured": false,
         "team": "6175e364a7b1d5b14a6dd787"
+    },
+    {
+        "name": "Miles Bridges",
+        "position": "small forward",
+        "jerseyNum": 0,
+        "height": "6'6",
+        "weight": 225,
+        "collegeEtc": "Michigan State University",
+        "injured": false,
+        "team": "6175e1c4f8f9ccb6f655547c"
     }
 ]

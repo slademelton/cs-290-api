@@ -66,3 +66,40 @@ exports.createPlayer = asyncHandler(async (req, res, next) => {
         data: player
     })
 });
+
+//put /api/v1/players/playerId
+exports.updatePlayer = asyncHandler(async (req, res, next) => {
+    
+    let player = await Player.findById(req.params.playerId);
+
+    if (!player) {
+        return next(new ErrorHandler(`No team with ID of ${req.params.playerId}`, 404));
+    }
+    
+    player = await Player.findByIdAndUpdate(req.params.playerId, req.body, {
+        new: true,
+        runValidators: true
+    })
+
+    res.status(200).json({
+        success: true,
+        data: player,
+    })
+});
+
+//delete /api/v1/players/:playerId
+exports.deletePlayer = asyncHandler(async (req, res, next) => {
+    
+    const player = await Player.findById(req.params.playerId);
+
+    if (!player) {
+        return next(new ErrorHandler(`No team with ID of ${req.params.playerId}`, 404));
+    }
+    
+    await player.remove();
+
+    res.status(200).json({
+        success: true,
+        data: {}
+    })
+});
