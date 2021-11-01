@@ -25,15 +25,18 @@ connectToDb();
 app.use(fileupload());
 
 //set static folder
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
 //import routes
 const teamRoutes = require('./routes/teams');
 const playerRoutes = require('./routes/players');
+const authRoutes = require('./routes/auth');
 
 //use routes
 app.use('/api/v1/teams', teamRoutes);
 app.use('/api/v1/players', playerRoutes);
+app.use('/api/v1/auth', authRoutes);
+
 //error handling middleware - must be last app.use()!!
 app.use(errorHandler);
 
