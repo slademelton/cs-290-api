@@ -52,11 +52,10 @@ const server = app.listen(PORT, () => {
 process.on('unhandledRejection', (err, promise) => {
     //Log the problem to the console
     console.log(`Unhandled Promise Rejection: ${err.message}`.white.bgRed.bold.underline);
+    console.log(err);
     //Stop the server and the process
     server.close(() => {
         process.exit(1);
     })
 
 })
-
-//done with 11.1, 11.2, 11.3, 11.4, 11.5
