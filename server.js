@@ -5,6 +5,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const fileupload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 
 //Import Local Files
 const connectToDb = require('./config/connectToDb');
@@ -17,6 +18,9 @@ dotenv.config({path: "./config/config.env"});
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
+
+//Cookie Parser
+app.use(cookieParser());
 
 //Connect to DB
 connectToDb();
@@ -55,4 +59,4 @@ process.on('unhandledRejection', (err, promise) => {
 
 })
 
-//done with 11.1, 11.2, 11.3, 11.4, 
+//done with 11.1, 11.2, 11.3, 11.4, 11.5
