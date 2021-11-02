@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const UserSchema = mongoose.Schema({
     username: {
         type: String,
-        required: [true, 'Please add a username']
+        required: [true, 'Please add a username'],
+        unique: true,
     },
     email: {
         type: String,
@@ -33,5 +35,17 @@ const UserSchema = mongoose.Schema({
     }
 });
 
+//=============
+//middleware
+//=============
+//hash password when registering user
+UserSchema.pre('save', async function(next) {
+    //generate salt
+    const salt = await bcrypt.genSalt(10)
+
+    //hash password
+    this.password = await bcrypt.hash(this.password, salt);
+
+});
 
 module.exports = mongoose.model('User', UserSchema);
