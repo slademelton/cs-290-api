@@ -56,6 +56,8 @@ process.on('unhandledRejection', (err, promise) => {
     //Stop the server and the process
     server.close(() => {
         process.exit(1);
-    })
+    });
 
-})
+});
+
+//done with 12.1, 

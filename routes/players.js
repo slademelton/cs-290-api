@@ -3,6 +3,9 @@ const router = express.Router({ mergeParams: true });
 const advancedResults = require('../middleware/advancedResults');
 const Player = require('../models/player');
 
+
+const {protect} = require('../middleware/auth');
+
 const { 
     getPlayers,
     getPlayer,
@@ -19,7 +22,7 @@ router.route('/').get(advancedResults(Player, {
     }), 
     getPlayers
     )
-    .post(createPlayer);
-router.route('/:playerId').get(getPlayer).put(updatePlayer).delete(deletePlayer);
+    .post(protect, createPlayer);
+router.route('/:playerId').get(getPlayer).put(protect, updatePlayer).delete(protect, deletePlayer);
 
 module.exports = router;
