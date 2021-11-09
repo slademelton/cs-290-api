@@ -4,7 +4,7 @@ const advancedResults = require('../middleware/advancedResults');
 const Player = require('../models/player');
 
 
-const {protect} = require('../middleware/auth');
+const { protect, authorize } = require('../middleware/auth');
 
 const { 
     getPlayers,
@@ -22,7 +22,7 @@ router.route('/').get(advancedResults(Player, {
     }), 
     getPlayers
     )
-    .post(protect, createPlayer);
-router.route('/:playerId').get(getPlayer).put(protect, updatePlayer).delete(protect, deletePlayer);
+    .post(protect, authorize('publisher', 'admin'), createPlayer);
+router.route('/:playerId').get(getPlayer).put(protect, authorize('publisher', 'admin'), updatePlayer).delete(protect, authorize('publisher', 'admin'), deletePlayer);
 
 module.exports = router;

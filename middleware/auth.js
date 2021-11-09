@@ -30,8 +30,14 @@ exports.protect = asyncHandler(async (req, res, next) => {
         console.error(err);
         return next(new ErrorResponse('Not authorized to access this resource', 401));
     }
-
-    //continue
 })
 
-//stopped at 6:41 on 12_1
+//grant access to specific roles
+exports.authorize = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(new ErrorResponse(`Role ${req.user.role} is not authorized to access this resource`, 403));
+        }
+        next();
+    }
+}

@@ -3,7 +3,7 @@ const router = express.Router();
 const advancedResults = require('../middleware/advancedResults');
 const Team = require('../models/team');
 
-const {protect} = require('../middleware/auth');
+const {protect, authorize} = require('../middleware/auth');
 
 const { getTeams,
     getTeam, 
@@ -22,10 +22,10 @@ router.use('/:id/players', playerRouter);
 
 
 
-router.route('/').get(advancedResults(Team, 'players'), getTeams).post(protect, createTeam);
+router.route('/').get(advancedResults(Team, 'players'), getTeams).post(protect, authorize('publisher', 'admin'), createTeam);
 router.route('/radius').get(getTeamsInRadius);
-router.route('/:id').get(getTeam).put(protect, updateTeam).delete(protect, deleteTeam);
-router.route('/:id/photo').put(protect, uploadTeamPhoto);
+router.route('/:id').get(getTeam).put(protect, authorize('publisher', 'admin'), updateTeam).delete(protect, authorize('publisher', 'admin'), deleteTeam);
+router.route('/:id/photo').put(protect, authorize('publisher', 'admin'), uploadTeamPhoto);
 
 module.exports = router;
  
