@@ -1,0 +1,44 @@
+[
+    {
+        "_id": "6181a4d1d3717be452b175e2",
+        "username": "slade",
+        "email": "slade@slade.com",
+        "role": "publisher",
+        "password": "adsadsassdadsadsdad"
+    },
+    {
+        "_id": "6193f3e2254dcade8e6f881f",
+        "username": "admin",
+        "email": "admin@admin.com",
+        "role": "user",
+        "password": "adsadsassdadsadsdad"
+    },
+    {
+        "_id": "6193f3eb7e140c0aaf66c3b3",
+        "username": "Logan McMahan",
+        "email": "logo@logo.com",
+        "role": "publisher",
+        "password": "adsadsassdadsadsdad"
+    },
+    {
+        "_id": "6193f3f462321d98c7620e75",
+        "username": "steve harvey",
+        "email": "steve@steve.com",
+        "role": "publisher",
+        "password": "adsadsassdadsadsdad"
+    },
+    {
+        "_id": "6193f3fd90ac1085b6241ca7",
+        "username": "jeff",
+        "email": "jeff@jeff.com",
+        "role": "publisher",
+        "password": "adsadsassdadsadsdad"
+    },
+    {
+        "_id": "6193f55f3fd28e984617fece",
+        "username": "lavar ball",
+        "email": "lavar@lavar.com",
+        "role": "user",
+        "password": "adsadsassdadsadsdad"
+    }
+]

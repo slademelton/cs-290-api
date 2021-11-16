@@ -6,7 +6,7 @@ const path = require('path');
 
 //ex {{url}}/api/v1/teams?wins[lte]=2
 exports.getTeams = asyncHandler(async (req, res, next) => {
-    res.status(200).json(res.advancedResults)
+    res.status(200).json(res.advancedResults);
 });
 exports.getTeam = asyncHandler(async (req, res, next) => {
         const team = await Team.findById(req.params.id);
@@ -19,7 +19,13 @@ exports.getTeam = asyncHandler(async (req, res, next) => {
         });
 });
 exports.createTeam = asyncHandler(async (req, res, next) => {
-        const newTeam = await Team.create(req.body);
+    //check if user has already created a team
+    const publishedTeam = await Team.findOne({ user: req.user.id })
+    if (publishedTeam && req.user.role !== 'admin') {
+        return next(new ErrorHandler("This user has already created a team", 400));
+    }
+    req.body.user = req.user.id;    
+    const newTeam = await Team.create(req.body);
         res.status(201).json({
             success: true,
             data: newTeam

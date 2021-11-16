@@ -9,7 +9,8 @@
         "address": "333 East Trade Street Charlotte, NC 28202",
         "coach": "James Borrego",
         "wins": 3,
-        "losses": 0
+        "losses": 0,
+        "user": "6181a4d1d3717be452b175e2"
     },
     {
         "_id": "6175e27821e2bd042f78c7a5",
@@ -21,7 +22,8 @@
         "address": "191 Beale Street Memphis, TN 38103",
         "coach": "Taylor Jenkins",
         "wins": 2,
-        "losses": 0
+        "losses": 0,
+        "user": "6193f3eb7e140c0aaf66c3b3"
     },
     {
         "_id": "6175e364a7b1d5b14a6dd787",
@@ -33,6 +35,7 @@
         "address": "1 State Farm Dr Atlanta, GA 30303",
         "coach": "Nate McMillan",
         "wins": 1,
-        "losses": 1
+        "losses": 1,
+        "user": "6193f3f462321d98c7620e75"
     }
 ]
