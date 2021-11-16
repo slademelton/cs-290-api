@@ -33,22 +33,35 @@ exports.createTeam = asyncHandler(async (req, res, next) => {
 
 });
 exports.updateTeam = asyncHandler(async (req, res, next) => {
-        const team = await Team.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true,
-        });
-        if (!team) {
+    let team = await Team.findById(req.params.id);    
+    
+    if (!team) {
             return next(new ErrorHandler(`Team not found with id of ${req.params.id}`, 404));
-        }
-        res.status(200).json({
-            success: true,
-            data: team
-        });
+    }
+
+    //ensure user is team owner
+    if (team.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        return next(new ErrorHandler(`User ${req.user.id} not authorized to update this resource`, 403));
+    }
+
+    team = await Team.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+    });
+
+    res.status(200).json({
+        success: true,
+        data: team
+    });
 });
 exports.deleteTeam = asyncHandler(async (req, res, next) => {
         const team = await Team.findById(req.params.id);
         if (!team) {
             return next(new ErrorHandler(`Team not found with id of ${req.params.id}`, 404));
+        }
+
+        if (team.user.toString() !== req.user.id && req.user.role !== 'admin') {
+            return next(new ErrorHandler(`User ${req.user.id} not authorized to delete this resource`, 403));
         }
 
         team.remove();
@@ -94,6 +107,9 @@ exports.uploadTeamPhoto = asyncHandler(async (req, res, next) => {
     const team = await Team.findById(req.params.id);
     if (!team) {
         return next(new ErrorHandler(`Team not found with id of ${req.params.id}`, 404));
+    }
+    if (team.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        return next(new ErrorHandler(`User ${req.user.id} not authorized to update this resource`, 403));
     }
     //validate image
     if (!req.files) {
