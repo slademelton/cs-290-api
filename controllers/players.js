@@ -17,7 +17,6 @@ exports.getPlayers = asyncHandler(async (req, res, next) => {
     } else {
         res.status(200).json(res.advancedResults);
     }
-
 });
 
 exports.getPlayer = asyncHandler(async (req, res, next) => {
@@ -42,7 +41,7 @@ exports.getPlayer = asyncHandler(async (req, res, next) => {
 exports.createPlayer = asyncHandler(async (req, res, next) => {
     //update req.body to add team _id
     req.body.team = req.params.id;
-
+    req.body.user = req.user.id;
 
     //get the team
     const team = await Team.findById(req.params.id);
@@ -51,8 +50,14 @@ exports.createPlayer = asyncHandler(async (req, res, next) => {
     if (!team) {
         return next (new ErrorHandler(`No team with ID of ${req.params.id}`, 404));
     }
+
+    //ensure user is player owner
+    if (team.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        return next(new ErrorHandler(`User ${req.user.id} not authorized to add a player to team ${team._id}`, 403));
+    }
+
     //create player, assigning it to team
-    const player = await Player.create(req.body); //will include the team _id we added
+    const player = await Player.create(req.body); //will include the team & user _id's we added
 
     //send response
     res.status(201).json({
@@ -67,9 +72,14 @@ exports.updatePlayer = asyncHandler(async (req, res, next) => {
     let player = await Player.findById(req.params.playerId);
 
     if (!player) {
-        return next(new ErrorHandler(`No team with ID of ${req.params.playerId}`, 404));
+        return next(new ErrorHandler(`No player with ID of ${req.params.playerId}`, 404));
     }
-    
+
+    //ensure user is player owner
+    if (player.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        return next(new ErrorHandler(`User ${req.user.id} not authorized to update player ${player._id}`, 403));
+    }
+
     player = await Player.findByIdAndUpdate(req.params.playerId, req.body, {
         new: true,
         runValidators: true
@@ -87,7 +97,12 @@ exports.deletePlayer = asyncHandler(async (req, res, next) => {
     const player = await Player.findById(req.params.playerId);
 
     if (!player) {
-        return next(new ErrorHandler(`No team with ID of ${req.params.playerId}`, 404));
+        return next(new ErrorHandler(`No player with ID of ${req.params.playerId}`, 404));
+    }
+
+     //ensure user is player owner
+     if (player.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        return next(new ErrorHandler(`User ${req.user.id} not authorized to delete player ${player._id}`, 403));
     }
     
     await player.remove();

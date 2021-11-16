@@ -8,7 +8,8 @@
         "collegeEtc": "Illawarra Hawks of Australian NBL",
         "injured": false,
         "fee": 345,
-        "team": "6175e1c4f8f9ccb6f655547c"
+        "team": "6175e1c4f8f9ccb6f655547c",
+        "user": "6181a4d1d3717be452b175e2"
     },
     {
         "name": "Ja Morant",
@@ -19,7 +20,8 @@
         "collegeEtc": "Murray State University",
         "injured": false,
         "fee": 62,
-        "team": "6175e27821e2bd042f78c7a5"
+        "team": "6175e27821e2bd042f78c7a5",
+        "user": "6193f3eb7e140c0aaf66c3b3"
     },
     {
         "name": "Trae Young",
@@ -30,7 +32,8 @@
         "collegeEtc": "University of Oklahoma",
         "injured": false,
         "fee": 182,
-        "team": "6175e364a7b1d5b14a6dd787"
+        "team": "6175e364a7b1d5b14a6dd787",
+        "user": "6193f3f462321d98c7620e75"
     },
     {
         "name": "Miles Bridges",
@@ -41,6 +44,7 @@
         "collegeEtc": "Michigan State University",
         "injured": false,
         "fee": 30,
-        "team": "6175e1c4f8f9ccb6f655547c"
+        "team": "6175e1c4f8f9ccb6f655547c",
+        "user": "6181a4d1d3717be452b175e2"
     }
 ]
