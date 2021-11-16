@@ -1,7 +1,9 @@
+const crypto = require('crypto');
 const User = require('../models/user');
 const asyncHandler = require('../middleware/asyncHandler');
 const ErrorHandler = require('../utils/errorResponse');
 const sendEmail = require('../utils/sendEmail');
+
 
 //POST /api/v1/auth/register
 exports.registerUser = asyncHandler(async (req, res, next) => {
@@ -92,8 +94,33 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
         await user.save({ validateBeforeSave: false });
         return next(new ErrorHandler('Problem sending email', 500));
     }
+});
 
-    
+//PUT /api/v1/auth/resetpassword/:resetToken
+exports.resetPassword = asyncHandler(async (req, res, next) => {
+    //get hashed token
+    const resetPasswordToken = crypto.createHash('sha256').update(req.params.resetToken).digest('hex');
+
+    //find user with resetPasswordToken that matches the provided token, after hashing
+    //make sure is not past expiration date
+    const user = await User.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: {
+            $gt: Date.now()
+        }
+    });
+
+    if (!user) {
+        return next(new ErrorHandler('Invalid token or expired', 400));
+    }
+
+    //set new password
+    user.password = req.body.password // will automatically be hashed by our middleware
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    sendTokenResponse(user, 200, res);
 });
 
 //=====================
