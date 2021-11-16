@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const asyncHandler = require('../middleware/asyncHandler');
 const ErrorHandler = require('../utils/errorResponse');
+const sendEmail = require('../utils/sendEmail');
 
 //POST /api/v1/auth/register
 exports.registerUser = asyncHandler(async (req, res, next) => {
@@ -64,10 +65,35 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     //save that token to the user
     await user.save({ validateBeforeSave: false });
 
-    res.status(200).json({
-        success: true,
-        data: user
-    });
+    //create reset url
+    //Format: https://localhost:3000/api/v1/auth/resetpassword/:resettoken
+    const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/resetpassword/${resetToken}`;
+    
+    //create message
+    const message = `You are receiving this email because someone has requested the rest of a password at NBA API. Please make a PUT request to: \n\n ${resetUrl}`;
+
+    //send email
+    try {
+        await sendEmail({
+            recipient: user.email,
+            subject: "Password Reset Token",
+            message
+        })
+        res.status(200).json({
+            success: true,
+            data: "Email sent",
+        });
+    } catch (err) {
+        console.log(err);
+
+        //clear reset password fields from the DB
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save({ validateBeforeSave: false });
+        return next(new ErrorHandler('Problem sending email', 500));
+    }
+
+    
 });
 
 //=====================
