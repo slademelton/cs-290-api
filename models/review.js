@@ -32,7 +32,8 @@ const ReviewSchema = mongoose.Schema({
     }
 })
 
-
+//add index so user can only add one review per team
+ReviewSchema.index({ team: 1, user: 1 }, {unique: true})
 
 
 module.exports = mongoose.model("Review", ReviewSchema);

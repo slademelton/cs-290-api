@@ -35,3 +35,23 @@ exports.getReview = asyncHandler(async (req, res, next) => {
         data: review
     });
 });
+
+//POST /api/v1/teams/:id/reviews
+exports.createReview = asyncHandler(async (req, res, next) => {
+    //add team and user ids to the request body
+    req.body.team = req.params.id;
+    req.body.user = req.user.id;
+
+    const team = await Team.findById(req.params.id);
+
+    if (!team) {
+        return next(new ErrorHandler(`No team found with id of ${req.params.id}`, 404))
+    }
+
+    const review = await Review.create(req.body) //contains submitted data, plus the team and user id we added
+
+    res.status(201).json({
+        success: true,
+        data: review
+    });
+});
