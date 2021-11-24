@@ -35,11 +35,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 const teamRoutes = require('./routes/teams');
 const playerRoutes = require('./routes/players');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
 
 //use routes
 app.use('/api/v1/teams', teamRoutes);
 app.use('/api/v1/players', playerRoutes);
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
 
 //error handling middleware - must be last app.use()!!
 app.use(errorHandler);
@@ -59,4 +61,4 @@ process.on('unhandledRejection', (err, promise) => {
     });
 
 });
-//done with 13.1, 13.2, 13.3, 13.4, 13.5
+//done with 14.1, 
