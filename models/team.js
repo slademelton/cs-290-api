@@ -69,6 +69,9 @@ const TeamSchema = new mongoose.Schema({
     averageFee: {
         type: Number
     },
+    averageRating: {
+        type: Number
+    },
     losses: {
         type: Number,
         required: true,
