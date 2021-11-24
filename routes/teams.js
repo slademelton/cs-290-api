@@ -16,9 +16,12 @@ const { getTeams,
 
 //include other resource routers
 const playerRouter = require('./players');
+const reviewRouter = require('./reviews');
+
 
 //reroute into other resource routers
 router.use('/:id/players', playerRouter);
+router.use('/:id/reviews', reviewRouter);
 
 
 
