@@ -5,7 +5,7 @@ const Review = require('../models/review');
 
 const { protect, authorize } = require('../middleware/auth');
 
-const { getReviews } = require('../controllers/reviews');
+const { getReviews, getReview } = require('../controllers/reviews');
 
 // /api/v1/reviews
 // /api/v1/teams/:id/reviews
@@ -15,5 +15,7 @@ router.route('/').get(advancedResults(Review, {
     }), 
     getReviews
 );
+
+router.route('/:id').get(getReview);
 
 module.exports = router;

@@ -1,0 +1,16 @@
+[
+    {
+        "title": "positive review",
+        "text": "this team is awesome and I love it",
+        "rating": 10,
+        "team": "6175e1c4f8f9ccb6f655547c",
+        "user": "6193f3e2254dcade8e6f881f"
+    },
+    {
+        "title": "negative review",
+        "text": "this team is terrible and I hate it a lot",
+        "rating": 1,
+        "team": "6175e27821e2bd042f78c7a5",
+        "user": "6181a4d1d3717be452b175e2"
+    }
+]
