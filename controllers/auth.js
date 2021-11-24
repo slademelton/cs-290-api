@@ -122,6 +122,38 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
     sendTokenResponse(user, 200, res);
 });
+// PUT /api/v1/auth/updatedetails
+exports.updateDetails = asyncHandler(async (req, res, next) => {
+    const fieldsToUpdate = {
+        username: req.body.username,
+        email: req.body.email
+    }
+    
+    const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
+        new: true,
+        runValidators: true
+    });
+
+    res.status(200).json({
+        success: true,
+        data: user
+    });
+});
+
+//PUT /api/v1/auth/updatepassword
+exports.updatePassword = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id).select("+password");
+    
+    //verify current password is correct
+    if (!(await user.matchPassword(req.body.currentPassword))) {
+        return next(new ErrorHandler('Incorrect current password', 401));
+    }
+
+    user.password = req.body.newPassword;
+    await user.save();
+
+    sendTokenResponse(user, 200, res);
+});
 
 //=====================
 //utility functions
