@@ -7,6 +7,8 @@ const colors = require('colors');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xssClean = require('xss-clean');
 
 //Import Local Files
 const connectToDb = require('./config/connectToDb');
@@ -31,6 +33,12 @@ app.use(fileupload());
 
 //sanitize input
 app.use(mongoSanitize());
+
+//set security headers
+app.use(helmet());
+
+//prevent xss attacks
+app.use(xssClean());
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
