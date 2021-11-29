@@ -12,7 +12,7 @@ const errorHandler = (err, req, res, next) => {
 
     //mongoose bad _id format
     if (err.name === 'CastError') {
-        const message = `Object ID ${err.value} is invalid.`;
+        const message = `Invalid resource id.`;
         error = new ErrorResponse(message, 400);
     }
 

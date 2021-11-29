@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
+const mongoSanitize = require('express-mongo-sanitize');
 
 //Import Local Files
 const connectToDb = require('./config/connectToDb');
@@ -27,6 +28,9 @@ connectToDb();
 
 //file uploading
 app.use(fileupload());
+
+//sanitize input
+app.use(mongoSanitize());
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -63,4 +67,3 @@ process.on('unhandledRejection', (err, promise) => {
     });
 
 });
-//done with 14.1, 14.2, 14.3, 14.4,
