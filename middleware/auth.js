@@ -14,6 +14,8 @@ exports.protect = asyncHandler(async (req, res, next) => {
     }
 
     //check if token was passed in cookies - LATER
+    
+
 
     //verify the token
     if (!token) {
